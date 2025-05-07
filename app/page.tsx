@@ -69,7 +69,7 @@ const textSliderPhrases = [
   { text: "Feedback that isn’t “sounds good bro”", emoji: "💬" },
   { text: "Level up your sound. Rack up more listens.", emoji: "📈" },
   { text: "Get addicted to exporting, not tweaking", emoji: "🧠" },
-  { text: "Actually enjoy the process again.", emoji: "🎉" }
+  { text: "Actually enjoy the process again.", emoji: "😊" }
 ];
 
 // --- Component Definition ---

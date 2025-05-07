@@ -1,83 +1,64 @@
 'use client'
-import { AnimatedBackground } from '@/components/ui/animated-background'
-import { TextLoop } from '@/components/ui/text-loop'
-import { MonitorIcon, MoonIcon, SunIcon } from 'lucide-react'
-import { useTheme } from 'next-themes'
-import { useEffect, useState } from 'react'
 
-const THEMES_OPTIONS = [
-  {
-    label: 'Light',
-    id: 'light',
-    icon: <SunIcon className="h-4 w-4" />,
-  },
-  {
-    label: 'Dark',
-    id: 'dark',
-    icon: <MoonIcon className="h-4 w-4" />,
-  },
-  {
-    label: 'System',
-    id: 'system',
-    icon: <MonitorIcon className="h-4 w-4" />,
-  },
-]
-
-function ThemeSwitch() {
-  const [mounted, setMounted] = useState(false)
-  const { theme, setTheme } = useTheme()
-
-  useEffect(() => {
-    setMounted(true)
-  }, [])
-
-  if (!mounted) {
-    return null
-  }
-
-  return (
-    <AnimatedBackground
-      className="pointer-events-none rounded-lg bg-zinc-100 dark:bg-zinc-800"
-      defaultValue={theme}
-      transition={{
-        type: 'spring',
-        bounce: 0,
-        duration: 0.2,
-      }}
-      enableHover={false}
-      onValueChange={(id) => {
-        setTheme(id as string)
-      }}
-    >
-      {THEMES_OPTIONS.map((theme) => {
-        return (
-          <button
-            key={theme.id}
-            className="inline-flex h-7 w-7 items-center justify-center text-zinc-500 transition-colors duration-100 focus-visible:outline-2 data-[checked=true]:text-zinc-950 dark:text-zinc-400 dark:data-[checked=true]:text-zinc-50"
-            type="button"
-            aria-label={`Switch to ${theme.label} theme`}
-            data-id={theme.id}
-          >
-            {theme.icon}
-          </button>
-        )
-      })}
-    </AnimatedBackground>
-  )
-}
+import Link from 'next/link'
+// Import necessary icons from react-icons
+import { FaSoundcloud, FaInstagram, FaTwitter, FaYoutube } from 'react-icons/fa' // Added YouTube as an example
 
 export function Footer() {
+  const currentYear = new Date().getFullYear(); // Get the current year dynamically
+
   return (
-    <footer className="mt-24 border-t border-zinc-100 px-0 py-4 dark:border-zinc-800">
-      <div className="flex items-center justify-between">
-        <a href="https://github.com/ibelick/nim" target="_blank">
-          <TextLoop className="text-xs text-zinc-500">
-            <span>© 2024 Nim.</span>
-            <span>Built with Motion-Primitives.</span>
-          </TextLoop>
-        </a>
-        <div className="text-xs text-zinc-400">
-          <ThemeSwitch />
+    <footer className="bg-zinc-900 dark:bg-black text-zinc-300 pt-12 pb-8">
+      {/* Dark background, lighter text, more padding */}
+      <div className="container mx-auto px-6 md:px-12 lg:px-24"> {/* Match layout padding */}
+        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-8">
+
+          {/* Column 1: Branding & Info */}
+          <div className="lg:col-span-2"> {/* Give more space on larger screens */}
+            <Link href="/" className="inline-block text-xl font-semibold text-white mb-3 hover:text-zinc-200 transition-colors">
+              Bedroom Producers
+            </Link>
+            <p className="text-sm text-zinc-400 mb-4 max-w-sm">
+              Built in bedrooms. Played in clubs. A gritty, no-BS home for underdog producers.
+            </p>
+            <p className="text-xs text-zinc-500">
+              © {currentYear} Bedroom Producers. All Rights Reserved.
+            </p>
+          </div>
+
+          {/* Column 2: Quick Links */}
+          <div>
+            <h5 className="text-sm font-semibold text-white uppercase tracking-wider mb-3">Quick Links</h5>
+            <ul className="space-y-2">
+              <li><Link href="/" className="text-sm text-zinc-400 hover:text-white transition-colors">Home</Link></li>
+              <li><Link href="/#submit" className="text-sm text-zinc-400 hover:text-white transition-colors">Submit Track</Link></li>
+              <li><Link href="/#content" className="text-sm text-zinc-400 hover:text-white transition-colors">Resources</Link></li>
+              <li><Link href="/#newsletter" className="text-sm text-zinc-400 hover:text-white transition-colors">Newsletter</Link></li>
+              {/* Add other relevant links */}
+            </ul>
+          </div>
+
+          {/* Column 3: Connect / Social */}
+          <div>
+            <h5 className="text-sm font-semibold text-white uppercase tracking-wider mb-3">Connect</h5>
+            <div className="flex space-x-4">
+              {/* Replace "#" with your actual social media profile URLs */}
+              <a href="#" target="_blank" rel="noopener noreferrer" aria-label="SoundCloud" className="text-zinc-400 hover:text-white transition-colors">
+                <FaSoundcloud size={20} />
+              </a>
+              <a href="#" target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="text-zinc-400 hover:text-white transition-colors">
+                <FaInstagram size={20} />
+              </a>
+              <a href="#" target="_blank" rel="noopener noreferrer" aria-label="Twitter" className="text-zinc-400 hover:text-white transition-colors">
+                <FaTwitter size={20} />
+              </a>
+               <a href="#" target="_blank" rel="noopener noreferrer" aria-label="YouTube" className="text-zinc-400 hover:text-white transition-colors">
+                <FaYoutube size={20} />
+              </a>
+              {/* Add other social links */}
+            </div>
+          </div>
+
         </div>
       </div>
     </footer>

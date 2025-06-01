@@ -1,7 +1,9 @@
-'use client'
+// app/page.js
+'use client' 
 
 import { motion, AnimatePresence } from 'framer-motion'
 import { useState, useEffect } from 'react'
+import Image from 'next/image' 
 
 // --- Animation Variants ---
 const VARIANTS_CONTAINER = {
@@ -22,22 +24,23 @@ const VARIANTS_SECTION = {
     y: 0,
     transition: {
       duration: 0.7,
-      ease: [0.23, 1, 0.32, 1], // easeOutQuint
+      ease: [0.23, 1, 0.32, 1], 
     },
   },
 }
 
+// Updated itemVariants for smoother, more deliberate animation
 const itemVariants = {
   hidden: { opacity: 0, y: 20, scale: 0.98 },
   visible: {
     opacity: 1,
     y: 0,
     scale: 1,
-    transition: { duration: 0.5, ease: 'easeOut' },
+    transition: { duration: 0.6, ease: 'easeInOut' }, // Adjusted duration and easing
   },
 }
 
-// Text slider phrases from user's copy
+// Text slider phrases
 const textSliderPhrases = [
   { text: "Finish more tracks. No more half-finished loops.", emoji: "✅" },
   { text: "Grab free tools that actually help.", emoji: "📦" },
@@ -47,8 +50,8 @@ const textSliderPhrases = [
   { text: "Actually enjoy the process again.", emoji: "😊" }
 ];
 
-// --- Component Definition ---
-export default function Home() {
+// --- Component Definition for the Page ---
+export default function HomePage() { 
   const [currentPhraseIndex, setCurrentPhraseIndex] = useState(0);
 
   useEffect(() => {
@@ -57,27 +60,39 @@ export default function Home() {
     }, 3500); 
 
     return () => clearInterval(intervalId);
-  }, []);
+  }, []); 
 
   return (
     <motion.main
       variants={VARIANTS_CONTAINER}
       initial="hidden"
       animate="visible"
-      className="overflow-x-hidden bg-white dark:bg-zinc-950 font-sans"
+      className="overflow-x-hidden bg-white dark:bg-zinc-950 font-sans" 
     >
-      {/* 1. HERO SECTION */}
+      {/* 1. HERO SECTION with IMAGE BACKGROUND - Polished */}
       <motion.section
         variants={VARIANTS_SECTION}
-        className="relative overflow-hidden bg-gradient-to-br from-zinc-50 via-white to-zinc-100 dark:from-zinc-950 dark:via-black dark:to-zinc-900 py-28 md:py-48 min-h-[75vh] md:min-h-[85vh] flex items-center justify-center text-center"
+        className="relative overflow-hidden py-28 md:py-48 min-h-[75vh] md:min-h-[85vh] flex items-center justify-center text-center"
       >
-        <div className="container relative z-10 mx-auto px-4 sm:px-6 lg:px-8">
+        <Image
+          src="/hero_good.jpg" 
+          alt="Bedroom music producer setup with vibrant lighting"
+          layout="fill"
+          objectFit="cover" 
+          className="z-0" 
+          priority 
+        />
+        {/* Strengthened Overlay for "faded" effect */}
+        <div className="absolute top-0 left-0 w-full h-full bg-black/[.70] z-[1]"></div> {/* Approx 70% opacity black overlay */}
+
+        <div className="container relative z-[2] mx-auto px-4 sm:px-6 lg:px-8"> 
           <div className="flex flex-col items-center gap-6 md:gap-8">
             <motion.h1
               variants={itemVariants}
-              className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight text-zinc-900 dark:text-zinc-100 max-w-4xl mx-auto leading-tight"
+              // Added subtle text shadow for better definition
+              className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight text-white dark:text-zinc-100 max-w-4xl mx-auto leading-tight filter drop-shadow-[0_1px_1px_rgba(0,0,0,0.5)] dark:drop-shadow-[0_1px_1px_rgba(0,0,0,0.7)]" 
             >
-              🎧 A Site for People Who Make Music in Their Rooms.
+              A Site for People Who Make Music in Their Rooms. 🎧
             </motion.h1>
 
             <motion.div
@@ -86,21 +101,22 @@ export default function Home() {
             >
               <AnimatePresence mode="wait">
                 <motion.div
-                  key={currentPhraseIndex}
+                  key={currentPhraseIndex} 
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -20 }}
-                  transition={{ duration: 0.5, ease: [0.4, 0, 0.2, 1] }}
-                  className="flex items-center justify-center gap-2"
+                  transition={{ duration: 0.5, ease: [0.4, 0, 0.2, 1] }} // Kept this distinct animation
+                  // Added subtle text shadow to animated text
+                  className="flex items-center justify-center gap-2 filter drop-shadow-[0_1px_1px_rgba(0,0,0,0.4)] dark:drop-shadow-[0_1px_1px_rgba(0,0,0,0.6)]"
                 >
-                  <span className="bg-clip-text text-transparent bg-gradient-to-r from-zinc-700 via-black to-zinc-800 dark:from-zinc-400 dark:via-white dark:to-zinc-400">
+                  <span className="bg-clip-text text-transparent bg-gradient-to-r from-zinc-300 via-white to-zinc-200 dark:from-zinc-400 dark:via-white dark:to-zinc-400">
                     {textSliderPhrases[currentPhraseIndex].text}
                   </span>
                   <motion.span
                     initial={{ scale: 0.5, opacity: 0 }}
                     animate={{ scale: [1, 1.2, 1], opacity: 1 }}
                     transition={{ delay: 0.15, duration: 0.3 }}
-                    className="text-zinc-700 dark:text-zinc-300"
+                    className="text-zinc-200 dark:text-zinc-300" 
                   >
                     {textSliderPhrases[currentPhraseIndex].emoji}
                   </motion.span>
@@ -110,11 +126,12 @@ export default function Home() {
 
             <motion.p
               variants={itemVariants}
-              className="text-base md:text-lg lg:text-xl text-zinc-700 dark:text-zinc-300 max-w-xl md:max-w-2xl lg:max-w-3xl leading-relaxed mt-6 mb-8 mx-auto" // Increased font size, max-width, and added bottom margin
+              // Added subtle text shadow for paragraph
+              className="text-base md:text-lg lg:text-xl text-zinc-200 dark:text-zinc-300 max-w-xl md:max-w-2xl lg:max-w-3xl leading-relaxed mt-6 mb-8 mx-auto filter drop-shadow-[0_1px_1px_rgba(0,0,0,0.3)] dark:drop-shadow-[0_1px_1px_rgba(0,0,0,0.5)]"
             >
-              Tired of the usual online hype and actually want to <strong className="text-zinc-900 dark:text-white">finish more, better music?</strong>
-              <br className="my-2 hidden sm:block" /> {/* Added a line break for larger screens */}
-              That’s why Bedroom Producers exists. We're your stripped-back home for what <strong className="text-zinc-900 dark:text-white">actually moves the needle:</strong> brutally honest track feedback, no-BS tools designed to help you finish, and a <strong className="text-zinc-900 dark:text-white">real community</strong> of producers united in the grind, focused on making better music track by track, and achieving <strong className="text-orange-500 dark:text-orange-400">actual traction.</strong>
+              Tired of the usual online hype and actually want to <strong className="text-white dark:text-white">finish more, better music?</strong>
+              <br className="my-2 hidden sm:block" />
+              That’s why Bedroom Producers exists. We're your stripped-back home for what <strong className="text-white dark:text-white">actually moves the needle:</strong> brutally honest track feedback, no-BS tools designed to help you finish, and a <strong className="text-white dark:text-white">real community</strong> of producers united in the grind, focused on making better music track by track, and achieving <strong className="text-orange-400 dark:text-orange-400">actual traction.</strong>
             </motion.p>
 
             <motion.div
@@ -123,7 +140,8 @@ export default function Home() {
             >
               <a href="#submit" className="block">
                 <motion.button
-                  whileHover={{ scale: 1.03, boxShadow: "0px 10px 20px -5px rgba(251, 146, 60, 0.4)" }} 
+                  // Enhanced hover state
+                  whileHover={{ scale: 1.03, y: -2, boxShadow: "0px 12px 25px -8px rgba(251, 146, 60, 0.5)" }} 
                   whileTap={{ scale: 0.98 }}
                   className="bg-orange-500 text-white px-8 py-3.5 rounded-lg text-base font-semibold flex items-center gap-2.5 hover:bg-orange-600 transition-all duration-200 shadow-lg hover:shadow-xl"
                 >
@@ -132,9 +150,10 @@ export default function Home() {
               </a>
               <a href="#content" className="block">
                  <motion.button
-                  whileHover={{ scale: 1.03, boxShadow: "0px 10px 20px -5px rgba(0,0,0,0.1)" }}
+                  // Enhanced hover state
+                  whileHover={{ scale: 1.03, y: -2, boxShadow: "0px 12px 25px -8px rgba(255,255,255,0.15)" }} 
                   whileTap={{ scale: 0.98 }}
-                  className="border border-zinc-800 dark:border-zinc-300 text-zinc-800 dark:text-zinc-100 px-8 py-3.5 rounded-lg text-base font-semibold flex items-center gap-2.5 bg-white dark:bg-transparent hover:bg-zinc-100 dark:hover:bg-zinc-800/50 transition-all duration-200 shadow-md hover:shadow-lg"
+                  className="border border-zinc-300 text-zinc-100 px-8 py-3.5 rounded-lg text-base font-semibold flex items-center gap-2.5 bg-white/10 dark:bg-white/5 hover:bg-white/20 dark:hover:bg-white/10 backdrop-blur-sm transition-all duration-200 shadow-md hover:shadow-lg"
                  >
                   <span role="img" aria-label="package emoji" className="mr-1">📦</span> Browse Free Tools and Templates
                 </motion.button>
@@ -145,7 +164,7 @@ export default function Home() {
       </motion.section>
       {/* END OF HERO SECTION */}
 
-      {/* 2. Track Submission Section (Main Interactive Form, id="submit") */}
+      {/* 2. Track Submission Section */}
       <motion.section
         id="submit" 
         variants={VARIANTS_SECTION}
@@ -154,7 +173,7 @@ export default function Home() {
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
              <motion.h2
-               variants={itemVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.5 }}
+               variants={itemVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.5 }} 
                className="text-3xl md:text-4xl font-bold text-zinc-900 dark:text-zinc-100 mb-4"
               >
                Need feedback on a track? That is the main thing we do. <span role="img" aria-label="rocket emoji" className="ml-1">🚀</span>
@@ -169,7 +188,7 @@ export default function Home() {
           
           <motion.div className="mb-16">
             <motion.div
-                variants={VARIANTS_CONTAINER} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }}
+                variants={VARIANTS_CONTAINER} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }} 
                 className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 max-w-4xl mx-auto"
             >
                 <motion.div variants={itemVariants} className="flex flex-col items-center text-center p-6 bg-white dark:bg-zinc-900 rounded-xl shadow-lg border border-zinc-100 dark:border-zinc-800 hover:shadow-xl transition-shadow">
@@ -199,7 +218,7 @@ export default function Home() {
           <motion.form
              variants={itemVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.5 }}
              className="space-y-6 bg-white dark:bg-zinc-900 p-8 md:p-10 rounded-xl shadow-2xl border border-zinc-200 dark:border-zinc-800 max-w-3xl mx-auto"
-             onSubmit={(e) => e.preventDefault()}
+             onSubmit={(e) => e.preventDefault()} 
           >
             <div>
               <label htmlFor="name" className="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-1.5">Name</label>
@@ -244,8 +263,78 @@ export default function Home() {
       </motion.section>
       {/* END OF Track Submission Section */}
 
+      {/* 3. "The Stuff You Wish Music School Actually Taught" Section */}
+      <motion.section
+        variants={VARIANTS_SECTION}
+        className="py-20 md:py-28 bg-zinc-50 dark:bg-zinc-950" 
+      >
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <motion.h2
+             variants={itemVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.5 }}
+             className="text-3xl md:text-4xl font-bold text-zinc-900 dark:text-zinc-100 mb-10 max-w-4xl mx-auto flex items-center justify-center gap-3"
+          >
+            <span role="img" aria-label="thinking face emoji" className="text-4xl">🤔</span> The Stuff You Wish Music School Actually Taught <br className="hidden sm:block"/> — Without the $1200 Price Tag
+          </motion.h2>
+          
+          <motion.div 
+            variants={itemVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.5 }}
+            className="max-w-3xl mx-auto text-center"
+          >
+             <p className="text-xl font-semibold text-zinc-800 dark:text-zinc-200 mt-12 mb-8">And here’s some of the practical stuff you’ll get access to:</p>
+          </motion.div>
 
-      {/* 3. Core Belief Section */}
+             <motion.div
+                variants={VARIANTS_CONTAINER} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }}
+                className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 mx-auto max-w-6xl" 
+            >
+                <motion.div variants={itemVariants} className="flex items-start gap-4 p-6 bg-white dark:bg-zinc-900 rounded-xl border border-zinc-200 dark:border-zinc-700 shadow-lg hover:shadow-xl transition-shadow">
+                    <span className="text-3xl mt-0.5" role="img" aria-label="check mark emoji">✅</span>
+                    <div>
+                        <h3 className="font-semibold text-xl text-zinc-900 dark:text-zinc-100 mb-1">Actionable DAW Templates</h3>
+                        <p className="text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed">Jumpstart your tracks with pre-routed Ableton, Logic & FL Studio project files. No more blank canvas paralysis.</p>
+                    </div>
+                </motion.div>
+                <motion.div variants={itemVariants} className="flex items-start gap-4 p-6 bg-white dark:bg-zinc-900 rounded-xl border border-zinc-200 dark:border-zinc-700 shadow-lg hover:shadow-xl transition-shadow">
+                    <span className="text-3xl mt-0.5" role="img" aria-label="check mark emoji">✅</span>
+                    <div>
+                        <h3 className="font-semibold text-xl text-zinc-900 dark:text-zinc-100 mb-1">"Finish Faster" Checklists</h3>
+                        <p className="text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed">Step-by-step guides for mixing, arrangement, and mastering, so you always know the next practical step.</p>
+                    </div>
+                </motion.div>
+                <motion.div variants={itemVariants} className="flex items-start gap-4 p-6 bg-white dark:bg-zinc-900 rounded-xl border border-zinc-200 dark:border-zinc-700 shadow-lg hover:shadow-xl transition-shadow">
+                     <span className="text-3xl mt-0.5" role="img" aria-label="check mark emoji">✅</span>
+                    <div>
+                        <h3 className="font-semibold text-xl text-zinc-900 dark:text-zinc-100 mb-1">The 60-Second Gear Guide</h3>
+                        <p className="text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed">Cut through the hype: quick, practical advice on essential gear that actually improves your sound.</p>
+                    </div>
+                </motion.div>
+                <motion.div variants={itemVariants} className="flex items-start gap-4 p-6 bg-white dark:bg-zinc-900 rounded-xl border border-zinc-200 dark:border-zinc-700 shadow-lg hover:shadow-xl transition-shadow">
+                    <span className="text-3xl mt-0.5" role="img" aria-label="check mark emoji">✅</span>
+                    <div>
+                        <h3 className="font-semibold text-xl text-zinc-900 dark:text-zinc-100 mb-1">Feedback That Fixes Problems</h3>
+                        <p className="text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed">Submit your tracks and get specific, actionable advice on what to improve, not just "sounds good."</p>
+                    </div>
+                </motion.div>
+                <motion.div variants={itemVariants} className="flex items-start gap-4 p-6 bg-white dark:bg-zinc-900 rounded-xl border border-zinc-200 dark:border-zinc-700 shadow-lg hover:shadow-xl transition-shadow">
+                    <span className="text-3xl mt-0.5" role="img" aria-label="check mark emoji">✅</span>
+                    <div>
+                        <h3 className="font-semibold text-xl text-zinc-900 dark:text-zinc-100 mb-1">No-Nonsense Sample Packs</h3>
+                        <p className="text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed">Curated, high-quality sounds you'll actually use, without wading through gigabytes of filler.</p>
+                    </div>
+                </motion.div>
+                <motion.div variants={itemVariants} className="flex items-start gap-4 p-6 bg-white dark:bg-zinc-900 rounded-xl border border-zinc-200 dark:border-zinc-700 shadow-lg hover:shadow-xl transition-shadow">
+                     <span className="text-3xl mt-0.5" role="img" aria-label="check mark emoji">✅</span>
+                    <div>
+                        <h3 className="font-semibold text-xl text-zinc-900 dark:text-zinc-100 mb-1">Monthly "Finish It" Challenges</h3>
+                        <p className="text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed">Gentle prompts and support to complete one track start-to-finish each month. Victory laps encouraged.</p>
+                    </div>
+                </motion.div>
+            </motion.div>
+        </div>
+      </motion.section>
+      {/* END OF "The Stuff You Wish Music School Actually Taught" Section */}
+
+      {/* 4. Core Belief Section */}
       <motion.section
         variants={VARIANTS_SECTION}
         className="py-20 md:py-28 bg-white dark:bg-zinc-900" 
@@ -296,64 +385,7 @@ export default function Home() {
       </motion.section>
       {/* END OF Core Belief Section */}
 
-      {/* 4. "The Stuff You Wish Music School Actually Taught" Section */}
-      <motion.section
-        variants={VARIANTS_SECTION}
-        className="py-20 md:py-28 bg-zinc-50 dark:bg-zinc-950" 
-      >
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <motion.h2
-             variants={itemVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.5 }}
-             className="text-3xl md:text-4xl font-bold text-zinc-900 dark:text-zinc-100 mb-10 max-w-4xl mx-auto flex items-center justify-center gap-3"
-          >
-            <span role="img" aria-label="thinking face emoji" className="text-4xl">🤔</span> The Stuff You Wish Music School Actually Taught <br className="hidden sm:block"/> — Without the $1200 Price Tag
-          </motion.h2>
-          
-          <motion.div 
-            variants={itemVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.5 }} 
-            className="text-lg text-zinc-700 dark:text-zinc-400 leading-relaxed mb-12 max-w-3xl mx-auto text-left space-y-6 p-6 bg-white dark:bg-zinc-900 rounded-xl shadow-lg border border-zinc-200 dark:border-zinc-700"
-          >
-            <p>Let's be brutally honest: most "secret" courses <span role="img" aria-label="money with wings">💸</span> are overpriced, recycled info. Traditional music schools <span role="img" aria-label="graduation cap">🎓</span> often bury you in outdated theory. And the YouTube abyss <span role="img" aria-label="dizzy face">😵‍💫</span>? A clickbait haystack. After all that, the real skills—finishing tracks, building a workflow—are often ignored. So, what are we about? Simple: No ego, no gatekeeping, no guru nonsense. Just us, making slightly less shit music than we did yesterday. </p>
-          </motion.div>
-
-          <motion.div 
-            variants={itemVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.5 }}
-            className="max-w-3xl mx-auto text-center"
-          >
-             <p className="text-xl font-semibold text-zinc-800 dark:text-zinc-200 mt-12 mb-8">And here’s some of the practical stuff you’ll get access to:</p>
-          </motion.div>
-
-             <motion.div
-                variants={VARIANTS_CONTAINER} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }}
-                className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 mx-auto max-w-6xl" 
-            >
-                <motion.div variants={itemVariants} className="flex items-start gap-4 p-6 bg-white dark:bg-zinc-900 rounded-xl border border-zinc-200 dark:border-zinc-700 shadow-lg hover:shadow-xl transition-shadow">
-                    <span className="text-3xl mt-0.5" role="img" aria-label="check mark emoji">✅</span>
-                    <div>
-                        <h3 className="font-semibold text-xl text-zinc-900 dark:text-zinc-100 mb-1">Genuinely Free Resources</h3>
-                        <p className="text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed">Killer templates, curated sample packs, and no-BS checklists. All free, no upsells disguised as gifts.</p>
-                    </div>
-                </motion.div>
-                <motion.div variants={itemVariants} className="flex items-start gap-4 p-6 bg-white dark:bg-zinc-900 rounded-xl border border-zinc-200 dark:border-zinc-700 shadow-lg hover:shadow-xl transition-shadow">
-                    <span className="text-3xl mt-0.5" role="img" aria-label="check mark emoji">✅</span>
-                    <div>
-                        <h3 className="font-semibold text-xl text-zinc-900 dark:text-zinc-100 mb-1">Simple Accountability Tools</h3>
-                        <p className="text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed">Keep your projects moving forward, whether you track your progress privately or share it with the community.</p>
-                    </div>
-                </motion.div>
-                <motion.div variants={itemVariants} className="flex items-start gap-4 p-6 bg-white dark:bg-zinc-900 rounded-xl border border-zinc-200 dark:border-zinc-700 shadow-lg hover:shadow-xl transition-shadow">
-                     <span className="text-3xl mt-0.5" role="img" aria-label="check mark emoji">✅</span>
-                    <div>
-                        <h3 className="font-semibold text-xl text-zinc-900 dark:text-zinc-100 mb-1">The One-Minute Monthly</h3>
-                        <p className="text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed">Our newsletter promises just 1 killer tip, 1 useful tool, and 1 community win. Once a month. No fluff, ever.</p>
-                    </div>
-                </motion.div>
-            </motion.div>
-        </div>
-      </motion.section>
-      {/* END OF "The Stuff You Wish Music School Actually Taught" Section */}
-
-      {/* 5. "Set Your Goal" (Accountability) Section */}
+      {/* 5. "Set Your Goal" Section */}
       <motion.section
         variants={VARIANTS_SECTION}
         className="py-20 md:py-28 bg-white dark:bg-zinc-900"
@@ -436,7 +468,7 @@ export default function Home() {
       <motion.section
         id="newsletter"
         variants={VARIANTS_SECTION}
-        className="py-20 md:py-28 bg-gradient-to-r from-zinc-800 to-black text-white"
+        className="py-20 md:py-28 bg-gradient-to-r from-zinc-800 to-black text-white" 
       >
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
            <motion.div variants={itemVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.5 }}>
@@ -455,6 +487,7 @@ export default function Home() {
             Get one tip worth reading, one free resource worth using, and one
             small win from the Bedroom Producers crew. No spam, ever. Straight to your inbox.
           </motion.p>
+          
           <motion.form
              variants={itemVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.5 }}
              className="flex flex-col sm:flex-row justify-center items-center gap-3 max-w-md mx-auto" 
@@ -493,28 +526,29 @@ export default function Home() {
           >
             <span role="img" aria-label="speech bubble emoji" className="mr-2">💬</span> From the Community
           </motion.h2>
+          
           <motion.div
              variants={VARIANTS_CONTAINER} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }}
              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto"
           >
-            <motion.div variants={itemVariants} className="bg-zinc-50 dark:bg-zinc-800/50 p-6 rounded-xl shadow-lg border border-zinc-100 dark:border-zinc-800 hover:shadow-xl transition-shadow">
-              <span role="img" aria-label="left quotation mark" className="text-zinc-300 dark:text-zinc-700 text-3xl mb-4 inline-block">“</span>
-              <p className="text-zinc-700 dark:text-zinc-300 italic mb-4 leading-relaxed">"Finally got feedback that actually made sense and helped me fix my muddy low-end. No generic advice here."</p>
-              <div className="flex items-center gap-3">
+            <motion.div variants={itemVariants} className="bg-zinc-50 dark:bg-zinc-800/70 p-6 rounded-xl shadow-lg border border-zinc-200 dark:border-zinc-700 hover:shadow-xl transition-shadow flex flex-col">
+              <div className="mb-3 text-lg text-yellow-400" role="img" aria-label="5 out of 5 stars">⭐⭐⭐⭐⭐</div>
+              <p className="text-zinc-700 dark:text-zinc-300 italic mb-4 leading-relaxed flex-grow">"Finally got feedback that actually made sense and helped me fix my muddy low-end. No generic advice here."</p>
+              <div className="flex items-center gap-3 mt-auto pt-3 border-t border-zinc-200 dark:border-zinc-700">
                  <span className="text-sm font-medium text-zinc-800 dark:text-zinc-200">– Alex P.</span>
               </div>
             </motion.div>
-            <motion.div variants={itemVariants} className="bg-zinc-50 dark:bg-zinc-800/50 p-6 rounded-xl shadow-lg border border-zinc-100 dark:border-zinc-800 hover:shadow-xl transition-shadow">
-               <span role="img" aria-label="left quotation mark" className="text-zinc-300 dark:text-zinc-700 text-3xl mb-4 inline-block">“</span>
-              <p className="text-zinc-700 dark:text-zinc-300 italic mb-4 leading-relaxed">"The free starter template saved me hours setting up my Ableton projects. Simple but effective stuff."</p>
-              <div className="flex items-center gap-3">
+            <motion.div variants={itemVariants} className="bg-zinc-50 dark:bg-zinc-800/70 p-6 rounded-xl shadow-lg border border-zinc-200 dark:border-zinc-700 hover:shadow-xl transition-shadow flex flex-col">
+              <div className="mb-3 text-lg text-yellow-400" role="img" aria-label="5 out of 5 stars">⭐⭐⭐⭐⭐</div>
+              <p className="text-zinc-700 dark:text-zinc-300 italic mb-4 leading-relaxed flex-grow">"The free starter template saved me hours setting up my Ableton projects. Simple but effective stuff."</p>
+              <div className="flex items-center gap-3 mt-auto pt-3 border-t border-zinc-200 dark:border-zinc-700">
                  <span className="text-sm font-medium text-zinc-800 dark:text-zinc-200">– Samira K.</span>
               </div>
             </motion.div>
-            <motion.div variants={itemVariants} className="bg-zinc-50 dark:bg-zinc-800/50 p-6 rounded-xl shadow-lg border border-zinc-100 dark:border-zinc-800 hover:shadow-xl transition-shadow">
-               <span role="img" aria-label="left quotation mark" className="text-zinc-300 dark:text-zinc-700 text-3xl mb-4 inline-block">“</span>
-              <p className="text-zinc-700 dark:text-zinc-300 italic mb-4 leading-relaxed">"Just knowing others are grinding away on their tracks too keeps me motivated. Less lonely than staring at a screen alone."</p>
-              <div className="flex items-center gap-3">
+            <motion.div variants={itemVariants} className="bg-zinc-50 dark:bg-zinc-800/70 p-6 rounded-xl shadow-lg border border-zinc-200 dark:border-zinc-700 hover:shadow-xl transition-shadow flex flex-col">
+              <div className="mb-3 text-lg text-yellow-400" role="img" aria-label="5 out of 5 stars">⭐⭐⭐⭐⭐</div>
+              <p className="text-zinc-700 dark:text-zinc-300 italic mb-4 leading-relaxed flex-grow">"Just knowing others are grinding away on their tracks too keeps me motivated. Less lonely than staring at a screen alone."</p>
+              <div className="flex items-center gap-3 mt-auto pt-3 border-t border-zinc-200 dark:border-zinc-700">
                  <span className="text-sm font-medium text-zinc-800 dark:text-zinc-200">– Jordan T.</span>
               </div>
             </motion.div>
@@ -526,20 +560,20 @@ export default function Home() {
 
       {/* 8. Latest Content Section (id="content") */}
        <motion.section
-        id="content" // ID for hero button link
+        id="content" 
         variants={VARIANTS_SECTION}
         className="py-20 md:py-28 bg-zinc-50 dark:bg-zinc-950"
       >
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
              <motion.div variants={itemVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.5 }}>
-               <span role="img" aria-label="books emoji" className="text-4xl text-black dark:text-white mb-5 mx-auto inline-block">📚</span>
+               <span role="img" aria-label="newspaper emoji" className="text-4xl text-black dark:text-white mb-5 mx-auto inline-block">📰</span>
              </motion.div>
              <motion.h2
                variants={itemVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.5 }}
                className="text-3xl md:text-4xl font-bold text-zinc-900 dark:text-zinc-100 mb-4"
               >
-               <span role="img" aria-label="books emoji" className="mr-2">📚</span> New Stuff On the Site
+               <span role="img" aria-label="newspaper emoji" className="mr-2">📰</span> New Stuff On the Site
              </motion.h2>
              <motion.p
                variants={itemVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.5 }}
@@ -550,7 +584,7 @@ export default function Home() {
           </div>
 
           <motion.div
-             variants={VARIANTS_CONTAINER} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }}
+             variants={VARIANTS_CONTAINER} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }} 
              className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mb-12"
           >
             <motion.div variants={itemVariants} className="group block rounded-xl border border-zinc-200 dark:border-zinc-800 hover:shadow-2xl dark:hover:shadow-zinc-900/50 hover:border-black dark:hover:border-zinc-600 transition-all duration-300 bg-white dark:bg-zinc-900 overflow-hidden">
@@ -559,7 +593,7 @@ export default function Home() {
                   <img
                     src="https://placehold.co/600x400/e2e8f0/475569?text=Blog+Post"
                     alt="Blog post illustration"
-                    loading="lazy"
+                    loading="lazy" 
                     className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                   />
                 </div>

@@ -87,7 +87,7 @@ export default function BlogPage() {
     <div className="min-h-screen bg-gradient-to-br from-zinc-50 via-white to-zinc-100 dark:from-zinc-950 dark:via-zinc-900 dark:to-zinc-950">
       {/* Hero Section */}
       <section className="relative py-20 md:py-32">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -118,7 +118,7 @@ export default function BlogPage() {
 
       {/* Blog Posts Grid */}
       <section className="pb-20">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}

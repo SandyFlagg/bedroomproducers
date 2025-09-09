@@ -6,6 +6,7 @@ import { Header } from './header'
 import { Footer } from './footer'
 import { ThemeProvider } from 'next-themes'
 import { BackToTop } from '../components/ui/back-to-top'
+import { FloatingAction } from '../components/ui/floating-action'
 
 export const metadata: Metadata = {
   title: 'Bedroom Producers',
@@ -43,6 +44,7 @@ export default function RootLayout({
           <main className="relative">{children}</main>
           <Footer />
           <BackToTop />
+          <FloatingAction />
         </ThemeProvider>
       </body>
     </html>

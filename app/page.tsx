@@ -1541,6 +1541,95 @@ export default function HomePage() {
         </div>
       </motion.section>
       {/* END OF Latest Content Section */}
+
+      {/* 9. Contact Section */}
+      <motion.section
+        id="contact"
+        variants={VARIANTS_SECTION}
+        className="relative bg-gradient-to-br from-zinc-900 via-zinc-800 to-zinc-900 py-20 md:py-28"
+      >
+        {/* Background Pattern */}
+        <div className="absolute inset-0 opacity-10">
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_1px_1px,rgba(251,146,60,0.3)_1px,transparent_0)] bg-[length:24px_24px]" />
+        </div>
+
+        <div className="relative container mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center">
+            <motion.div
+              variants={itemVariants}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, amount: 0.5 }}
+              className="mb-8"
+            >
+              <motion.div
+                animate={{ rotate: [0, 5, -5, 0] }}
+                transition={{
+                  duration: 4,
+                  repeat: Infinity,
+                  ease: 'easeInOut',
+                }}
+                className="mx-auto inline-flex items-center justify-center rounded-full bg-gradient-to-r from-orange-500 to-orange-600 p-4 shadow-lg"
+              >
+                <span className="text-3xl">💬</span>
+              </motion.div>
+            </motion.div>
+
+            <motion.h2
+              variants={itemVariants}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, amount: 0.5 }}
+              className="mb-6 text-4xl font-bold text-white md:text-5xl"
+            >
+              <span className="bg-gradient-to-r from-white via-orange-200 to-white bg-clip-text text-transparent">
+                Get In Touch
+              </span>
+            </motion.h2>
+
+            <motion.p
+              variants={itemVariants}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, amount: 0.5 }}
+              className="mx-auto mb-12 max-w-2xl text-lg leading-relaxed text-zinc-300"
+            >
+              Have questions about music production? Want to collaborate?
+              <span className="font-semibold text-orange-400">
+                Drop us a line.
+              </span>
+            </motion.p>
+
+            <motion.div
+              variants={itemVariants}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, amount: 0.5 }}
+              className="flex flex-col items-center justify-center gap-6 sm:flex-row"
+            >
+              <motion.a
+                href="mailto:hello@bedroomproducers.com"
+                whileHover={{ y: -4 }}
+                transition={{ type: 'spring', stiffness: 300 }}
+                className="group flex items-center gap-3 rounded-xl bg-gradient-to-r from-orange-500 to-orange-600 px-8 py-4 text-lg font-bold text-white shadow-2xl transition-all duration-300 hover:from-orange-600 hover:to-orange-700"
+              >
+                <span className="text-2xl">📧</span>
+                <span>hello@bedroomproducers.com</span>
+              </motion.a>
+
+              <motion.a
+                href="https://twitter.com/bedroomproducers"
+                whileHover={{ y: -4 }}
+                transition={{ type: 'spring', stiffness: 300 }}
+                className="group flex items-center gap-3 rounded-xl border border-zinc-600 bg-zinc-800/50 px-8 py-4 text-lg font-bold text-white backdrop-blur-md transition-all duration-300 hover:bg-zinc-700/50"
+              >
+                <span className="text-2xl">🐦</span>
+                <span>@bedroomproducers</span>
+              </motion.a>
+            </motion.div>
+          </div>
+        </div>
+      </motion.section>
     </motion.div>
   )
 }

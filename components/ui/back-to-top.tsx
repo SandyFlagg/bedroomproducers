@@ -23,7 +23,7 @@ export function BackToTop() {
   const scrollToTop = () => {
     window.scrollTo({
       top: 0,
-      behavior: 'smooth'
+      behavior: 'smooth',
     })
   }
 
@@ -37,7 +37,7 @@ export function BackToTop() {
           whileHover={{ scale: 1.1, y: -2 }}
           whileTap={{ scale: 0.95 }}
           onClick={scrollToTop}
-          className="fixed bottom-8 right-8 z-40 p-3 bg-orange-500 hover:bg-orange-600 text-white rounded-full shadow-lg hover:shadow-xl transition-all duration-200"
+          className="fixed right-8 bottom-8 z-40 rounded-full bg-orange-500 p-3 text-white shadow-lg transition-all duration-200 hover:bg-orange-600 hover:shadow-xl"
           aria-label="Back to top"
         >
           <FiChevronUp size={20} />

@@ -4,7 +4,14 @@ import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { useTheme } from 'next-themes'
 import { motion, AnimatePresence } from 'framer-motion'
-import { FiMenu, FiX, FiSun, FiMoon, FiMusic, FiHeadphones } from 'react-icons/fi'
+import {
+  FiMenu,
+  FiX,
+  FiSun,
+  FiMoon,
+  FiMusic,
+  FiHeadphones,
+} from 'react-icons/fi'
 import { ScrollProgress } from '../components/ui/scroll-progress'
 
 // Enhanced Logo component with music theme
@@ -21,115 +28,119 @@ function LogoIcon() {
           transition={{ duration: 2, repeat: Infinity, repeatDelay: 3 }}
           className="absolute -top-1 -right-1"
         >
-          <FiHeadphones size={12} className="text-zinc-600 dark:text-zinc-400" />
+          <FiHeadphones
+            size={12}
+            className="text-zinc-600 dark:text-zinc-400"
+          />
         </motion.div>
       </div>
     </motion.div>
   )
 }
 
-
 export function Header() {
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
-  const { theme, setTheme } = useTheme();
-  const [mounted, setMounted] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  const [scrolled, setScrolled] = useState(false)
+  const { theme, setTheme } = useTheme()
+  const [mounted, setMounted] = useState(false)
 
   useEffect(() => {
-    setMounted(true);
-  }, []);
+    setMounted(true)
+  }, [])
 
   // Handle scroll effect
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
-    };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+      setScrolled(window.scrollY > 20)
+    }
+    window.addEventListener('scroll', handleScroll)
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
 
   const toggleMobileMenu = () => {
-    setIsMobileMenuOpen(!isMobileMenuOpen);
-  };
+    setIsMobileMenuOpen(!isMobileMenuOpen)
+  }
 
   const toggleTheme = () => {
-    setTheme(theme === 'dark' ? 'light' : 'dark');
-  };
+    setTheme(theme === 'dark' ? 'light' : 'dark')
+  }
 
   // Smooth scroll to section
   const scrollToSection = (sectionId: string) => {
-    const element = document.getElementById(sectionId);
+    const element = document.getElementById(sectionId)
     if (element) {
-      element.scrollIntoView({ 
+      element.scrollIntoView({
         behavior: 'smooth',
-        block: 'start'
-      });
+        block: 'start',
+      })
     }
-    setIsMobileMenuOpen(false);
-  };
+    setIsMobileMenuOpen(false)
+  }
 
   // Close mobile menu if theme changes
   useEffect(() => {
     if (isMobileMenuOpen) {
-      setIsMobileMenuOpen(false);
+      setIsMobileMenuOpen(false)
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [theme]);
-
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [theme])
 
   return (
     <>
       <ScrollProgress />
       {/* Header container: Sticky, background blur, border */}
-      <motion.header 
+      <motion.header
         initial={{ y: -100 }}
         animate={{ y: 0 }}
-        transition={{ duration: 0.5, ease: "easeOut" }}
+        transition={{ duration: 0.5, ease: 'easeOut' }}
         className={`sticky top-0 z-50 w-full border-b transition-all duration-300 ${
-          scrolled 
-            ? 'border-zinc-200/90 dark:border-zinc-800/90 bg-white/95 dark:bg-zinc-950/95 backdrop-blur-lg shadow-sm' 
-            : 'border-zinc-200/50 dark:border-zinc-800/50 bg-white/80 dark:bg-zinc-950/80 backdrop-blur-md'
+          scrolled
+            ? 'border-zinc-200/90 bg-white/95 shadow-sm backdrop-blur-lg dark:border-zinc-800/90 dark:bg-zinc-950/95'
+            : 'border-zinc-200/50 bg-white/80 backdrop-blur-md dark:border-zinc-800/50 dark:bg-zinc-950/80'
         }`}
       >
         <div className="container mx-auto px-6 md:px-12 lg:px-24">
           <div className="flex h-16 items-center justify-between">
-
             {/* Site Title / Logo */}
-            <Link href="/" className="flex items-center gap-3" aria-label="Back to Homepage">
+            <Link
+              href="/"
+              className="flex items-center gap-3"
+              aria-label="Back to Homepage"
+            >
               <LogoIcon />
-              <span className="font-bold text-black dark:text-white text-lg hover:text-orange-500 dark:hover:text-orange-400 transition-colors">
+              <span className="text-lg font-bold text-black transition-colors hover:text-orange-500 dark:text-white dark:hover:text-orange-400">
                 Bedroom Producers
               </span>
             </Link>
 
             {/* Desktop Navigation Links */}
-            <nav className="hidden md:flex items-center">
+            <nav className="hidden items-center md:flex">
               <ul className="flex items-center space-x-8">
                 <li>
                   <button
                     onClick={() => scrollToSection('submit')}
-                    className="text-sm font-medium text-zinc-600 dark:text-zinc-400 hover:text-orange-500 dark:hover:text-orange-400 transition-colors relative group"
+                    className="group relative text-sm font-medium text-zinc-600 transition-colors hover:text-orange-500 dark:text-zinc-400 dark:hover:text-orange-400"
                   >
                     Submit Track
-                    <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-orange-500 transition-all duration-300 group-hover:w-full"></span>
+                    <span className="absolute -bottom-1 left-0 h-0.5 w-0 bg-orange-500 transition-all duration-300 group-hover:w-full"></span>
                   </button>
                 </li>
                 <li>
                   <button
                     onClick={() => scrollToSection('content')}
-                    className="text-sm font-medium text-zinc-600 dark:text-zinc-400 hover:text-orange-500 dark:hover:text-orange-400 transition-colors relative group"
+                    className="group relative text-sm font-medium text-zinc-600 transition-colors hover:text-orange-500 dark:text-zinc-400 dark:hover:text-orange-400"
                   >
                     Resources
-                    <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-orange-500 transition-all duration-300 group-hover:w-full"></span>
+                    <span className="absolute -bottom-1 left-0 h-0.5 w-0 bg-orange-500 transition-all duration-300 group-hover:w-full"></span>
                   </button>
                 </li>
                 <li>
                   <button
                     onClick={() => scrollToSection('newsletter')}
-                    className="text-sm font-medium text-zinc-600 dark:text-zinc-400 hover:text-orange-500 dark:hover:text-orange-400 transition-colors relative group"
+                    className="group relative text-sm font-medium text-zinc-600 transition-colors hover:text-orange-500 dark:text-zinc-400 dark:hover:text-orange-400"
                   >
                     Newsletter
-                    <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-orange-500 transition-all duration-300 group-hover:w-full"></span>
+                    <span className="absolute -bottom-1 left-0 h-0.5 w-0 bg-orange-500 transition-all duration-300 group-hover:w-full"></span>
                   </button>
                 </li>
               </ul>
@@ -143,9 +154,17 @@ export function Header() {
                 whileTap={{ scale: 0.95 }}
                 onClick={toggleTheme}
                 aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
-                className="p-2 rounded-lg text-zinc-600 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-800 hover:text-orange-500 dark:hover:text-orange-400 transition-all duration-200"
+                className="rounded-lg p-2 text-zinc-600 transition-all duration-200 hover:bg-zinc-100 hover:text-orange-500 dark:text-zinc-400 dark:hover:bg-zinc-800 dark:hover:text-orange-400"
               >
-                {mounted ? (theme === 'dark' ? <FiSun size={18} /> : <FiMoon size={18} />) : <FiSun size={18} />}
+                {mounted ? (
+                  theme === 'dark' ? (
+                    <FiSun size={18} />
+                  ) : (
+                    <FiMoon size={18} />
+                  )
+                ) : (
+                  <FiSun size={18} />
+                )}
               </motion.button>
 
               {/* Mobile Menu Button */}
@@ -154,7 +173,7 @@ export function Header() {
                 whileTap={{ scale: 0.95 }}
                 onClick={toggleMobileMenu}
                 aria-label="Toggle mobile menu"
-                className="p-2 rounded-lg text-zinc-600 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-800 hover:text-orange-500 dark:hover:text-orange-400 transition-all duration-200 md:hidden"
+                className="rounded-lg p-2 text-zinc-600 transition-all duration-200 hover:bg-zinc-100 hover:text-orange-500 md:hidden dark:text-zinc-400 dark:hover:bg-zinc-800 dark:hover:text-orange-400"
               >
                 {isMobileMenuOpen ? <FiX size={20} /> : <FiMenu size={20} />}
               </motion.button>
@@ -180,29 +199,31 @@ export function Header() {
               animate={{ x: 0 }}
               exit={{ x: '100%' }}
               transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-              className="fixed top-0 right-0 h-full w-4/5 max-w-xs bg-white dark:bg-zinc-900 shadow-2xl"
+              className="fixed top-0 right-0 h-full w-4/5 max-w-xs bg-white shadow-2xl dark:bg-zinc-900"
               onClick={(e) => e.stopPropagation()}
             >
               {/* Menu Header */}
-              <div className="flex items-center justify-between p-6 border-b border-zinc-200 dark:border-zinc-800">
+              <div className="flex items-center justify-between border-b border-zinc-200 p-6 dark:border-zinc-800">
                 <div className="flex items-center gap-3">
                   <LogoIcon />
-                  <span className="font-bold text-black dark:text-white">Menu</span>
+                  <span className="font-bold text-black dark:text-white">
+                    Menu
+                  </span>
                 </div>
                 <motion.button
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                   onClick={toggleMobileMenu}
                   aria-label="Close mobile menu"
-                  className="p-2 rounded-lg text-zinc-600 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-800 hover:text-orange-500 dark:hover:text-orange-400 transition-all duration-200"
+                  className="rounded-lg p-2 text-zinc-600 transition-all duration-200 hover:bg-zinc-100 hover:text-orange-500 dark:text-zinc-400 dark:hover:bg-zinc-800 dark:hover:text-orange-400"
                 >
                   <FiX size={20} />
                 </motion.button>
               </div>
-              
+
               {/* Menu Content */}
               <nav className="p-6">
-                <motion.ul 
+                <motion.ul
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.1 }}
@@ -214,7 +235,7 @@ export function Header() {
                   >
                     <button
                       onClick={() => scrollToSection('submit')}
-                      className="block w-full text-left text-lg font-medium text-zinc-700 dark:text-zinc-300 hover:text-orange-500 dark:hover:text-orange-400 transition-colors py-2"
+                      className="block w-full py-2 text-left text-lg font-medium text-zinc-700 transition-colors hover:text-orange-500 dark:text-zinc-300 dark:hover:text-orange-400"
                     >
                       🎧 Submit Track
                     </button>
@@ -225,7 +246,7 @@ export function Header() {
                   >
                     <button
                       onClick={() => scrollToSection('content')}
-                      className="block w-full text-left text-lg font-medium text-zinc-700 dark:text-zinc-300 hover:text-orange-500 dark:hover:text-orange-400 transition-colors py-2"
+                      className="block w-full py-2 text-left text-lg font-medium text-zinc-700 transition-colors hover:text-orange-500 dark:text-zinc-300 dark:hover:text-orange-400"
                     >
                       📦 Resources
                     </button>
@@ -236,7 +257,7 @@ export function Header() {
                   >
                     <button
                       onClick={() => scrollToSection('newsletter')}
-                      className="block w-full text-left text-lg font-medium text-zinc-700 dark:text-zinc-300 hover:text-orange-500 dark:hover:text-orange-400 transition-colors py-2"
+                      className="block w-full py-2 text-left text-lg font-medium text-zinc-700 transition-colors hover:text-orange-500 dark:text-zinc-300 dark:hover:text-orange-400"
                     >
                       📨 Newsletter
                     </button>
@@ -248,5 +269,5 @@ export function Header() {
         )}
       </AnimatePresence>
     </>
-  );
+  )
 }

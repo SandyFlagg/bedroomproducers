@@ -19,5 +19,21 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
         </figure>
       )
     },
+    // Hide any frontmatter that might be rendered as text
+    pre: ({ children, ...props }) => {
+      // Check if this is frontmatter content
+      if (typeof children === 'string' && children.includes('title:')) {
+        return null
+      }
+      return <pre {...props}>{children}</pre>
+    },
+    // Also handle code blocks that might contain frontmatter
+    code: ({ children, ...props }) => {
+      // Check if this is frontmatter content
+      if (typeof children === 'string' && children.includes('title:')) {
+        return null
+      }
+      return <code {...props}>{children}</code>
+    },
   }
 }

@@ -140,15 +140,25 @@ export default function HomePage() {
 
               <motion.h1
                 variants={itemVariants}
-                className="mx-auto max-w-5xl text-4xl leading-tight font-extrabold tracking-tight text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)] filter sm:text-5xl md:text-6xl lg:text-7xl dark:text-zinc-100"
+                className="mx-auto max-w-6xl text-5xl leading-tight font-black tracking-tight text-white drop-shadow-[0_4px_8px_rgba(0,0,0,0.8)] filter sm:text-6xl md:text-7xl lg:text-8xl dark:text-zinc-100"
               >
-                <span className="bg-gradient-to-r from-white via-orange-100 to-white bg-clip-text text-transparent">
+                <motion.span
+                  className="bg-gradient-to-r from-white via-orange-100 to-white bg-clip-text text-transparent"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.3, duration: 0.8 }}
+                >
                   Make Music That
-                </span>
+                </motion.span>
                 <br />
-                <span className="bg-gradient-to-r from-orange-400 via-orange-300 to-orange-400 bg-clip-text text-transparent">
+                <motion.span
+                  className="bg-gradient-to-r from-orange-400 via-orange-300 to-orange-400 bg-clip-text text-transparent"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.5, duration: 0.8 }}
+                >
                   Actually Gets Finished
-                </span>
+                </motion.span>
               </motion.h1>
             </motion.div>
 
@@ -1228,7 +1238,7 @@ export default function HomePage() {
               whileHover={{ y: -8, scale: 1.02 }}
               transition={{ type: 'spring', stiffness: 300, damping: 20 }}
             >
-              <a href="#" className="block">
+              <a href="/blog/5-ways-to-escape-loop-hell" className="block">
                 {/* Enhanced Image Container */}
                 <div className="relative h-56 w-full overflow-hidden bg-gradient-to-br from-zinc-100 to-zinc-200 dark:from-zinc-800 dark:to-zinc-900">
                   <img
@@ -1297,7 +1307,7 @@ export default function HomePage() {
               whileHover={{ y: -8, scale: 1.02 }}
               transition={{ type: 'spring', stiffness: 300, damping: 20 }}
             >
-              <a href="#" className="block">
+              <a href="/blog/ableton-starter-template-guide" className="block">
                 {/* Enhanced Image Container */}
                 <div className="relative h-56 w-full overflow-hidden bg-gradient-to-br from-blue-100 to-blue-200 dark:from-blue-900 dark:to-blue-800">
                   <img
@@ -1364,7 +1374,7 @@ export default function HomePage() {
               variants={itemVariants}
               className="group block overflow-hidden rounded-xl border border-zinc-200 bg-white transition-all duration-300 hover:border-black hover:shadow-2xl dark:border-zinc-800 dark:bg-zinc-900 dark:hover:border-zinc-600 dark:hover:shadow-zinc-900/50"
             >
-              <a href="#" className="block">
+              <a href="/blog/mixing-reset-checklist" className="block">
                 <div className="relative h-48 w-full bg-zinc-100 dark:bg-zinc-800">
                   <img
                     src="https://placehold.co/600x400/e0f2fe/075985?text=Checklist"
@@ -1401,7 +1411,7 @@ export default function HomePage() {
                     Simplify your mix decisions.
                   </p>
                   <span className="flex items-center gap-1 text-sm font-medium text-black group-hover:underline dark:text-white">
-                    Download PDF
+                    Read Guide
                   </span>
                 </div>
               </a>
@@ -1410,7 +1420,7 @@ export default function HomePage() {
               variants={itemVariants}
               className="group block overflow-hidden rounded-xl border border-zinc-200 bg-white transition-all duration-300 hover:border-black hover:shadow-2xl dark:border-zinc-800 dark:bg-zinc-900 dark:hover:border-zinc-600 dark:hover:shadow-zinc-900/50"
             >
-              <a href="#" className="block">
+              <a href="/blog/loop-slayer-challenge-01" className="block">
                 <div className="relative h-48 w-full bg-zinc-100 dark:bg-zinc-800">
                   <img
                     src="https://placehold.co/600x400/fecaca/991b1b?text=Challenge"
@@ -1439,7 +1449,7 @@ export default function HomePage() {
               variants={itemVariants}
               className="group block overflow-hidden rounded-xl border border-zinc-200 bg-white transition-all duration-300 hover:border-black hover:shadow-2xl dark:border-zinc-800 dark:bg-zinc-900 dark:hover:border-zinc-600 dark:hover:shadow-zinc-900/50"
             >
-              <a href="#" className="block">
+              <a href="/blog/loop-slayer-challenge-01" className="block">
                 <div className="relative h-48 w-full bg-zinc-100 dark:bg-zinc-800">
                   <img
                     src="https://placehold.co/600x400/a7f3d0/047857?text=Tip"
@@ -1472,7 +1482,7 @@ export default function HomePage() {
               variants={itemVariants}
               className="group block overflow-hidden rounded-xl border border-zinc-200 bg-white transition-all duration-300 hover:border-black hover:shadow-2xl dark:border-zinc-800 dark:bg-zinc-900 dark:hover:border-zinc-600 dark:hover:shadow-zinc-900/50"
             >
-              <a href="#" className="block">
+              <a href="/blog/loop-slayer-challenge-01" className="block">
                 <div className="relative h-48 w-full bg-zinc-100 dark:bg-zinc-800">
                   <img
                     src="https://placehold.co/600x400/c7d2fe/4338ca?text=Sample+Pack"

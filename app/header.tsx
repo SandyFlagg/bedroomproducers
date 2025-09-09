@@ -135,6 +135,15 @@ export function Header() {
                   </button>
                 </li>
                 <li>
+                  <a
+                    href="/blog"
+                    className="group relative text-sm font-medium text-zinc-600 transition-colors hover:text-orange-500 dark:text-zinc-400 dark:hover:text-orange-400"
+                  >
+                    Blog
+                    <span className="absolute -bottom-1 left-0 h-0.5 w-0 bg-orange-500 transition-all duration-300 group-hover:w-full"></span>
+                  </a>
+                </li>
+                <li>
                   <button
                     onClick={() => scrollToSection('newsletter')}
                     className="group relative text-sm font-medium text-zinc-600 transition-colors hover:text-orange-500 dark:text-zinc-400 dark:hover:text-orange-400"

@@ -1449,7 +1449,7 @@ export default function HomePage() {
               variants={itemVariants}
               className="group block overflow-hidden rounded-xl border border-zinc-200 bg-white transition-all duration-300 hover:border-black hover:shadow-2xl dark:border-zinc-800 dark:bg-zinc-900 dark:hover:border-zinc-600 dark:hover:shadow-zinc-900/50"
             >
-              <a href="/blog/loop-slayer-challenge-01" className="block">
+              <a href="/blog/quick-tip-sidechain-reverb" className="block">
                 <div className="relative h-48 w-full bg-zinc-100 dark:bg-zinc-800">
                   <img
                     src="https://placehold.co/600x400/a7f3d0/047857?text=Tip"
@@ -1482,7 +1482,7 @@ export default function HomePage() {
               variants={itemVariants}
               className="group block overflow-hidden rounded-xl border border-zinc-200 bg-white transition-all duration-300 hover:border-black hover:shadow-2xl dark:border-zinc-800 dark:bg-zinc-900 dark:hover:border-zinc-600 dark:hover:shadow-zinc-900/50"
             >
-              <a href="/blog/loop-slayer-challenge-01" className="block">
+              <a href="/blog/lo-fi-drums-vol-1" className="block">
                 <div className="relative h-48 w-full bg-zinc-100 dark:bg-zinc-800">
                   <img
                     src="https://placehold.co/600x400/c7d2fe/4338ca?text=Sample+Pack"

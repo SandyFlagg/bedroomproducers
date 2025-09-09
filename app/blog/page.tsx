@@ -48,6 +48,28 @@ const blogPosts = [
     featured: true,
     color: 'red',
   },
+  {
+    title: 'Quick Tip: Sidechain Reverb',
+    description:
+      'Duck reverb tails for cleaner mixes and better separation between elements.',
+    slug: 'quick-tip-sidechain-reverb',
+    category: 'Quick Tip',
+    date: '2024-01-20',
+    readTime: '3 min read',
+    featured: false,
+    color: 'purple',
+  },
+  {
+    title: 'Lo-Fi Drums Vol. 1',
+    description:
+      'Free pack of dusty drum one-shots with vintage character and analog warmth.',
+    slug: 'lo-fi-drums-vol-1',
+    category: 'Sample Pack',
+    date: '2024-01-22',
+    readTime: '5 min read',
+    featured: false,
+    color: 'green',
+  },
 ]
 
 const categoryColors = {
@@ -56,6 +78,8 @@ const categoryColors = {
   blue: 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300',
   green: 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-300',
   red: 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-300',
+  purple:
+    'bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-300',
 }
 
 export default function BlogPage() {

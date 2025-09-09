@@ -63,11 +63,11 @@ export default function HomePage() {
   }, []); 
 
   return (
-    <motion.main
+    <motion.div
       variants={VARIANTS_CONTAINER}
       initial="hidden"
       animate="visible"
-      className="overflow-x-hidden bg-white dark:bg-zinc-950 font-sans" 
+      className="overflow-x-hidden font-sans" 
     >
       {/* 1. HERO SECTION with IMAGE BACKGROUND - Polished */}
       <motion.section
@@ -709,6 +709,6 @@ export default function HomePage() {
       </motion.section>
       {/* END OF Latest Content Section */}
 
-    </motion.main>
+    </motion.div>
   )
 }

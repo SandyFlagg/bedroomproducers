@@ -3,48 +3,49 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { useTheme } from 'next-themes'
-// Using react-icons for consistency
-import { FiMenu, FiX, FiSun, FiMoon } from 'react-icons/fi'
+import { motion, AnimatePresence } from 'framer-motion'
+import { FiMenu, FiX, FiSun, FiMoon, FiMusic, FiHeadphones } from 'react-icons/fi'
+import { ScrollProgress } from '../components/ui/scroll-progress'
 
-// Simple SVG Logo component (example)
+// Enhanced Logo component with music theme
 function LogoIcon() {
   return (
-    <svg
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      className="text-black dark:text-white" // Use current text color
+    <motion.div
+      whileHover={{ scale: 1.05 }}
+      className="flex items-center gap-2"
     >
-      <path
-        d="M4 18.5V14.5M12 18.5V10.5M20 18.5V5.5"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-      <path
-        d="M4 11.5V5.5M12 7.5V5.5M20 2.5V5.5" // Adjusted top lines slightly
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        opacity="0.6" // Make secondary lines slightly less prominent
-      />
-    </svg>
+      <div className="relative">
+        <FiMusic className="text-orange-500" size={24} />
+        <motion.div
+          animate={{ rotate: [0, 10, -10, 0] }}
+          transition={{ duration: 2, repeat: Infinity, repeatDelay: 3 }}
+          className="absolute -top-1 -right-1"
+        >
+          <FiHeadphones size={12} className="text-zinc-600 dark:text-zinc-400" />
+        </motion.div>
+      </div>
+    </motion.div>
   )
 }
 
 
 export function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const { theme, setTheme } = useTheme();
-  // State to track mounted status for theme toggle (avoids hydration mismatch)
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
     setMounted(true);
+  }, []);
+
+  // Handle scroll effect
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 20);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   const toggleMobileMenu = () => {
@@ -53,6 +54,18 @@ export function Header() {
 
   const toggleTheme = () => {
     setTheme(theme === 'dark' ? 'light' : 'dark');
+  };
+
+  // Smooth scroll to section
+  const scrollToSection = (sectionId: string) => {
+    const element = document.getElementById(sectionId);
+    if (element) {
+      element.scrollIntoView({ 
+        behavior: 'smooth',
+        block: 'start'
+      });
+    }
+    setIsMobileMenuOpen(false);
   };
 
   // Close mobile menu if theme changes
@@ -66,92 +79,174 @@ export function Header() {
 
   return (
     <>
+      <ScrollProgress />
       {/* Header container: Sticky, background blur, border */}
-      <header className="sticky top-0 z-50 w-full border-b border-zinc-200/80 dark:border-zinc-800/80 bg-white/90 dark:bg-zinc-950/90 backdrop-blur-md">
-        <div className="container mx-auto px-6 md:px-12 lg:px-24"> {/* Match layout padding */}
-          <div className="flex h-16 items-center justify-between"> {/* Standard header height */}
+      <motion.header 
+        initial={{ y: -100 }}
+        animate={{ y: 0 }}
+        transition={{ duration: 0.5, ease: "easeOut" }}
+        className={`sticky top-0 z-50 w-full border-b transition-all duration-300 ${
+          scrolled 
+            ? 'border-zinc-200/90 dark:border-zinc-800/90 bg-white/95 dark:bg-zinc-950/95 backdrop-blur-lg shadow-sm' 
+            : 'border-zinc-200/50 dark:border-zinc-800/50 bg-white/80 dark:bg-zinc-950/80 backdrop-blur-md'
+        }`}
+      >
+        <div className="container mx-auto px-6 md:px-12 lg:px-24">
+          <div className="flex h-16 items-center justify-between">
 
             {/* Site Title / Logo */}
-            <Link href="/" className="flex items-center gap-2" aria-label="Back to Homepage">
+            <Link href="/" className="flex items-center gap-3" aria-label="Back to Homepage">
               <LogoIcon />
-              <span className="font-semibold text-black dark:text-white text-lg hover:text-zinc-700 dark:hover:text-zinc-300 transition-colors">
+              <span className="font-bold text-black dark:text-white text-lg hover:text-orange-500 dark:hover:text-orange-400 transition-colors">
                 Bedroom Producers
               </span>
             </Link>
 
             {/* Desktop Navigation Links */}
             <nav className="hidden md:flex items-center">
-              <ul className="flex items-center space-x-6">
-                <li><Link href="/#submit" className="text-sm font-medium text-zinc-600 dark:text-zinc-400 hover:text-black dark:hover:text-white transition-colors">Submit</Link></li>
-                <li><Link href="/#content" className="text-sm font-medium text-zinc-600 dark:text-zinc-400 hover:text-black dark:hover:text-white transition-colors">Resources</Link></li>
-                <li><Link href="/#newsletter" className="text-sm font-medium text-zinc-600 dark:text-zinc-400 hover:text-black dark:hover:text-white transition-colors">Newsletter</Link></li>
-                {/* Add more links as needed */}
+              <ul className="flex items-center space-x-8">
+                <li>
+                  <button
+                    onClick={() => scrollToSection('submit')}
+                    className="text-sm font-medium text-zinc-600 dark:text-zinc-400 hover:text-orange-500 dark:hover:text-orange-400 transition-colors relative group"
+                  >
+                    Submit Track
+                    <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-orange-500 transition-all duration-300 group-hover:w-full"></span>
+                  </button>
+                </li>
+                <li>
+                  <button
+                    onClick={() => scrollToSection('content')}
+                    className="text-sm font-medium text-zinc-600 dark:text-zinc-400 hover:text-orange-500 dark:hover:text-orange-400 transition-colors relative group"
+                  >
+                    Resources
+                    <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-orange-500 transition-all duration-300 group-hover:w-full"></span>
+                  </button>
+                </li>
+                <li>
+                  <button
+                    onClick={() => scrollToSection('newsletter')}
+                    className="text-sm font-medium text-zinc-600 dark:text-zinc-400 hover:text-orange-500 dark:hover:text-orange-400 transition-colors relative group"
+                  >
+                    Newsletter
+                    <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-orange-500 transition-all duration-300 group-hover:w-full"></span>
+                  </button>
+                </li>
               </ul>
             </nav>
 
             {/* Right side controls: Theme Toggle + Mobile Menu Button */}
             <div className="flex items-center gap-3">
               {/* Theme Toggle Button */}
-              <button
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
                 onClick={toggleTheme}
                 aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
-                className="p-2 rounded-md text-zinc-600 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-800 hover:text-black dark:hover:text-white transition-colors"
+                className="p-2 rounded-lg text-zinc-600 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-800 hover:text-orange-500 dark:hover:text-orange-400 transition-all duration-200"
               >
-                {mounted ? (theme === 'dark' ? <FiSun size={18} /> : <FiMoon size={18} />) : <FiSun size={18} /> /* Render placeholder on server */}
-              </button>
+                {mounted ? (theme === 'dark' ? <FiSun size={18} /> : <FiMoon size={18} />) : <FiSun size={18} />}
+              </motion.button>
 
               {/* Mobile Menu Button */}
-              <button
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
                 onClick={toggleMobileMenu}
                 aria-label="Toggle mobile menu"
-                className="p-2 rounded-md text-zinc-600 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-800 hover:text-black dark:hover:text-white transition-colors md:hidden" // Hide on medium screens and up
+                className="p-2 rounded-lg text-zinc-600 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-800 hover:text-orange-500 dark:hover:text-orange-400 transition-all duration-200 md:hidden"
               >
                 {isMobileMenuOpen ? <FiX size={20} /> : <FiMenu size={20} />}
-              </button>
+              </motion.button>
             </div>
           </div>
         </div>
-      </header>
+      </motion.header>
 
       {/* Mobile Menu Overlay */}
-      <div
-        className={`
-          fixed inset-0 z-40 bg-black/50 backdrop-blur-sm md:hidden
-          transition-opacity duration-300 ease-in-out
-          ${isMobileMenuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}
-        `}
-        onClick={toggleMobileMenu} // Close menu when clicking overlay
-        aria-hidden={!isMobileMenuOpen}
-      >
-        <div
-          className={`
-            fixed top-0 right-0 h-full w-4/5 max-w-xs bg-white dark:bg-zinc-900 shadow-xl
-            transform transition-transform duration-300 ease-in-out
-            ${isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'}
-          `}
-          onClick={(e) => e.stopPropagation()} // Prevent closing when clicking inside menu
-        >
-          {/* Menu Content */}
-          <div className="flex justify-end p-4 border-b border-zinc-200 dark:border-zinc-800">
-             <button
-                onClick={toggleMobileMenu}
-                aria-label="Close mobile menu"
-                className="p-2 rounded-md text-zinc-600 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-800 hover:text-black dark:hover:text-white transition-colors"
-              >
-                <FiX size={20} />
-              </button>
-          </div>
-          <nav className="p-6">
-            <ul className="space-y-4">
-              <li><Link href="/" onClick={toggleMobileMenu} className="block text-lg font-medium text-zinc-700 dark:text-zinc-300 hover:text-black dark:hover:text-white transition-colors">Home</Link></li>
-              <li><Link href="/#submit" onClick={toggleMobileMenu} className="block text-lg font-medium text-zinc-700 dark:text-zinc-300 hover:text-black dark:hover:text-white transition-colors">Submit</Link></li>
-              <li><Link href="/#content" onClick={toggleMobileMenu} className="block text-lg font-medium text-zinc-700 dark:text-zinc-300 hover:text-black dark:hover:text-white transition-colors">Resources</Link></li>
-              <li><Link href="/#newsletter" onClick={toggleMobileMenu} className="block text-lg font-medium text-zinc-700 dark:text-zinc-300 hover:text-black dark:hover:text-white transition-colors">Newsletter</Link></li>
-              {/* Add other links */}
-            </ul>
-          </nav>
-        </div>
-      </div>
+      <AnimatePresence>
+        {isMobileMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            className="fixed inset-0 z-40 bg-black/50 backdrop-blur-sm md:hidden"
+            onClick={toggleMobileMenu}
+            aria-hidden={!isMobileMenuOpen}
+          >
+            <motion.div
+              initial={{ x: '100%' }}
+              animate={{ x: 0 }}
+              exit={{ x: '100%' }}
+              transition={{ type: 'spring', damping: 25, stiffness: 200 }}
+              className="fixed top-0 right-0 h-full w-4/5 max-w-xs bg-white dark:bg-zinc-900 shadow-2xl"
+              onClick={(e) => e.stopPropagation()}
+            >
+              {/* Menu Header */}
+              <div className="flex items-center justify-between p-6 border-b border-zinc-200 dark:border-zinc-800">
+                <div className="flex items-center gap-3">
+                  <LogoIcon />
+                  <span className="font-bold text-black dark:text-white">Menu</span>
+                </div>
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  onClick={toggleMobileMenu}
+                  aria-label="Close mobile menu"
+                  className="p-2 rounded-lg text-zinc-600 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-800 hover:text-orange-500 dark:hover:text-orange-400 transition-all duration-200"
+                >
+                  <FiX size={20} />
+                </motion.button>
+              </div>
+              
+              {/* Menu Content */}
+              <nav className="p-6">
+                <motion.ul 
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.1 }}
+                  className="space-y-6"
+                >
+                  <motion.li
+                    whileHover={{ x: 5 }}
+                    transition={{ type: 'spring', stiffness: 300 }}
+                  >
+                    <button
+                      onClick={() => scrollToSection('submit')}
+                      className="block w-full text-left text-lg font-medium text-zinc-700 dark:text-zinc-300 hover:text-orange-500 dark:hover:text-orange-400 transition-colors py-2"
+                    >
+                      🎧 Submit Track
+                    </button>
+                  </motion.li>
+                  <motion.li
+                    whileHover={{ x: 5 }}
+                    transition={{ type: 'spring', stiffness: 300 }}
+                  >
+                    <button
+                      onClick={() => scrollToSection('content')}
+                      className="block w-full text-left text-lg font-medium text-zinc-700 dark:text-zinc-300 hover:text-orange-500 dark:hover:text-orange-400 transition-colors py-2"
+                    >
+                      📦 Resources
+                    </button>
+                  </motion.li>
+                  <motion.li
+                    whileHover={{ x: 5 }}
+                    transition={{ type: 'spring', stiffness: 300 }}
+                  >
+                    <button
+                      onClick={() => scrollToSection('newsletter')}
+                      className="block w-full text-left text-lg font-medium text-zinc-700 dark:text-zinc-300 hover:text-orange-500 dark:hover:text-orange-400 transition-colors py-2"
+                    >
+                      📨 Newsletter
+                    </button>
+                  </motion.li>
+                </motion.ul>
+              </nav>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </>
   );
 }

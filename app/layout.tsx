@@ -1,15 +1,22 @@
 // app/layout.tsx
 
-// Make sure this path is correct for your project structure.
-// If globals.css is in the 'app' folder: import './globals.css';
-// If globals.css is in a 'styles' folder at the root: import '../styles/globals.css';
 import './globals.css'; 
-
 import type { Metadata } from 'next';
+import { Header } from './header';
+import { Footer } from './footer';
+import { ThemeProvider } from 'next-themes';
+import { BackToTop } from '../components/ui/back-to-top';
 
 export const metadata: Metadata = {
-  title: 'Bedroom Producers', // Your site title
-  description: 'A site for people who make music in their bedrooms.', // Your site description
+  title: 'Bedroom Producers', 
+  description: 'A site for people who make music in their bedrooms.',
+  keywords: ['music production', 'bedroom producer', 'music feedback', 'music tools', 'music templates'],
+  authors: [{ name: 'Bedroom Producers' }],
+  openGraph: {
+    title: 'Bedroom Producers',
+    description: 'A site for people who make music in their bedrooms.',
+    type: 'website',
+  },
 };
 
 export default function RootLayout({
@@ -18,12 +25,21 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      {/* Next.js automatically handles the <head> content, including metadata.
-          You can create an app/head.tsx file for more direct control if needed. */}
-      <body>
-        {/* children will be the content of your app/page.tsx and other route segments */}
-        {children}
+    <html lang="en" suppressHydrationWarning>
+      <body className="min-h-screen bg-white dark:bg-zinc-950 transition-colors duration-300">
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange={false}
+        >
+          <Header />
+          <main className="relative">
+            {children}
+          </main>
+          <Footer />
+          <BackToTop />
+        </ThemeProvider>
       </body>
     </html>
   );
